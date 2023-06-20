@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/base::Layout(~{::section})">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <section class="">
+
+
+
+        <div class="w-2/3 mx-auto my-8">
+            <div class="bg-white p-8 shadow-3xl rounded-lg">
+                <h1 class="text-2xl font-semibold mb-6">Add New Contact</h1>
+
+                <div th:if="${session.message}" class="container">
+                    <div th:classappend="${'alert-'+session.message.type}" class="alert text-center">
+                        <p class="text-center" th:text="${session.message.content}"></p>
+                    </div>
+                    <th:block th:text="${@sessionHelper.removeMessageFromSession()}"></th:block>
+
+                </div>
+                <form th:action="@{/user/process-update}" method="post" th:object="${contact}" enctype="multipart/form-data">
+                    <input type="hidden" th:value="${contact.cId}" name="cId">
+                    <input type="hidden" th:value="${contact.image}" name="image">
+                    <div class="mb-4">
+
+                        <label for="username" class="block text-gray-700 font-medium">Full Name :</label>
+                        <div class="flex items-center border rounded-lg py-2 px-3">
+                            <i class="fas fa-user text-gray-500 mr-3"></i>
+                            <input required min="3" max="30" id="username" name="name" placeholder="Enter name"
+                                th:value="${contact.name}" class="focus:outline-none w-full">
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="nickname" class="block text-gray-700 font-medium">Nick name :</label>
+                        <div class="flex items-center border rounded-lg py-2 px-3">
+                            <i class="fas fa-user-circle text-gray-500 mr-3"></i>
+                            <input required type="text" id="nickname" name="secondName" placeholder="Enter nickname"
+                                th:value="${contact.secondName}" class="focus:outline-none w-full">
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="contactNumber" class="block text-gray-700 font-medium">Contact Number :</label>
+                        <div class="flex items-center border rounded-lg py-2 px-3">
+                            <i class="fas fa-phone-alt text-gray-500 mr-3"></i>
+                            <input required type="text" id="contactNumber" name="phone"
+                                placeholder="Enter contact number" th:value="${contact.phone}"
+                                class="focus:outline-none w-full">
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="email" class="block text-gray-700 font-medium">Email Address :</label>
+                        <div class="flex items-center border rounded-lg py-2 px-3">
+                            <i class="fas fa-envelope text-gray-500 mr-3"></i>
+                            <input required type="email" id="email" name="email" placeholder="Enter email address"
+                                th:value="${contact.email}" class="focus:outline-none w-full">
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="work" class="block text-gray-700 font-medium">Work</label>
+                        <div class="flex items-center border rounded-lg py-2 px-3">
+                            <i class="fas fa-briefcase text-gray-500 mr-3"></i>
+                            <input type="text" id="work" name="work" placeholder="Enter work" th:value="${contact.work}"
+                                class="focus:outline-none w-full">
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="image" class="block text-gray-700 font-medium">Image</label>
+                        <div class="flex items-center border rounded-lg py-2 px-3">
+                            <img class="profile-image h-24 w-24 mr-4" th:src="@{'/img/'+${contact.image}}"
+                                alt="Profile Image"></td>
+                            <div>
+                                <div>Choose New Image..</div>
+                                <!-- <i class="fas fa-image text-gray-500 mr-3"></i> -->
+                                <input type="file" id="image" name="profilePhoto" class="focus:outline-none w-full">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="description" class="block text-gray-700 font-medium">Description :</label>
+                        <div class="flex items-center  rounded-lg w-full">
+
+                            <textarea id="textarea" name="description" placeholder="Enter a description"
+                                th:text="${contact.description}" class="focus:outline-none w-full"></textarea>
+                        </div>
+                    </div>
+                    <input type="submit"
+                        class="bg-blue-500 text-white rounded-lg py-2 px-4 hover:bg-blue-600 transition-all"
+                        value="Save Contact"></input>
+                </form>
+            </div>
+        </div>
+
+        <script type="text/javascript" src='https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js'
+            referrerpolicy="origin">
+            </script>
+        <script>
+
+            tinymce.init({
+                selector: '#textarea',  // change this value according to the HTML
+                //toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | outdent indent'
+            });
+        </script>
+    </section>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/base::Layout(~{::section})">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+</head>
+
+<body>
+  <section>
+    <div class="flex items-center justify-center mt-5">
+      <div class=" w-1/2 bg-white rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-center">
+          <img class="w-32 h-32 rounded-full bg-blue-100" th:src="@{'/img/'+${contact.image}}" alt="Profile Image">
+        </div>
+        <h2 class="text-2xl font-semibold text-gray-800 mt-4 items-center"> <span th:text="${contact.name}"></span>
+          (<span class="text-gray-500 text-xm" th:text="${contact.work}">adfad</span>)</h2>
+        <hr class="my-2">
+        <div>
+          <h3 class="text-gray-900 text-base font-semibold">Nickname: <span class="font-medium text-gray-600 ml-5"
+              th:text="${contact.secondName}">JD</span></h3>
+          <p class="text-gray-900 text-base font-semibold">Contact: <span class="font-medium text-gray-600 ml-8"
+              th:text="${contact.phone}">123-456-7890</span></p>
+          <p class="text-gray-900 text-base font-semibold">Email: <span class="font-medium text-gray-600 ml-14"
+              th:text="${contact.email}">johndoe@example.com</span></p>
+        </div>
+        <hr class="my-2">
+        <p class="text-gray-900 text-base font-semibold">Description:</p>
+        <p class="text-gray-600" th:utext="${contact.description}" th:remove="tag"></p>
+        <hr class="my-2">
+        <div class="mt-6 flex justify-center">
+          <a href="#" class="text-blue-500 hover:text-blue-600 mx-2">
+            <i class="fab fa-facebook fa-2x"></i>
+          </a>
+          <a href="#" class="text-blue-400 hover:text-blue-500 mx-2">
+            <i class="fab fa-twitter fa-2x"></i>
+          </a>
+          <a href="#" class="text-red-600 hover:text-red-700 mx-2">
+            <i class="fab fa-youtube fa-2x"></i>
+          </a>
+        </div>
+        <div class="flex justify-between mx-52 mt-6">
+          <button class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"
+            th:onclick="|window.location.href='@{'/user/delete/'+${contact.cId}}'|">
+            Delete
+          </button>
+          <form method="post" th:action="@{'/user/edit-contact/'+${contact.cId}}">
+            <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+              Edit
+            </button>
+          </form>
+        </div>
+      </div>
+  </section>
+</body>
+
+</html>

@@ -4,6 +4,7 @@ import java.util.*;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -19,26 +20,37 @@ public class User {
     private String name;
     
     @Column(unique = true)
+    @Pattern(regexp=".+@.+\\.[a-z]+", message="Invalid email address!")
     private String email;
+
+    @NotBlank(message = "Password should not blank!!")
     private String password;
     private String role;
     private String imageUrl;
     private boolean enabled;
     @Column(length = 500)
+    @Size(min = 1,max=500,message = "Tell about yourself!!")
     private String about;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,mappedBy = "user")
     private List<Contact> contacts=new ArrayList<>();
+    public User(){
 
-    public User(int id, String name, String email, String password, String role, String imageUrl, boolean enabled,
+    }
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
+    }
+    public User( String name, String email, String password, String role, String imageUrl,
             String about) {
-        this.id = id;
+      
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
         this.imageUrl = imageUrl;
-        this.enabled = enabled;
         this.about = about;
     }
     @Override

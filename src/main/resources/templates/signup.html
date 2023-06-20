@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::Layout(~{::section})">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>this is home page</title>
+</head>
+
+<body>
+
+    <section class="signupbanner ">
+        <div class="container bg-gray-100 h-screen">
+
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+
+                    <div class="my-card mt-10 border-2 bg-white  w-1/2 mx-auto p-10 rounded-3xl">
+
+
+                        <div class="container text-center ">
+                            <!-- <img class="" alt="" th:src="@{/img/portfolio.png}"
+								style="width: 80px"> -->
+                        </div>
+
+
+
+                        <h1 class="text-center font-semibold text-2xl">Register Here!!</h1>
+                        <form novalidate th:action="@{/do_register}" method="post" th:object="${user}" class=" mx-auto">
+                            <div th:if="${session.message}" th:classappend="${session.message.type}" class="alert"
+                                role="alert">
+
+                                <p class="text-center" th:text="${session.message.content}"></p>
+                                <th:block th:text="${@sessionHelper.removeMessageFromSession()}"></th:block>
+
+                            </div>
+
+                            <!-- name -->
+
+                            <div class="form-group">
+                                <input type="text" name="name"
+                                    class="form-control mt-3 w-full bg-transparent rounded-2xl "
+                                    th:classappend="${#fields.hasErrors('name')?'is-invalid':''}" id="name_field"
+                                    aria-describedby="emailHelp" placeholder="Name  " th:value="${user.name}" />
+
+                                <div class="invalid-feedback" th:each="e : ${#fields.errors('name')}" th:text="${e}">
+                                </div>
+                            </div>
+
+
+
+                            <!-- email field -->
+
+                            <div class="form-group">
+                                <input name="email" type="email" class="form-control mt-3 rounded-2xl" id="email_field"
+                                    aria-describedby="emailHelp"
+                                    th:classappend="${#fields.hasErrors('name')?'is-invalid':''}"
+                                    placeholder="abc@xyz.com" th:value="${user.email}" />
+                                <div class="invalid-feedback" th:each="e : ${#fields.errors('email')}" th:text="${e}">
+                                </div>
+                            </div>
+
+                            <!-- Password field -->
+
+                            <div class="form-group">
+                                <input name="password" type="password" class="form-control mt-3 rounded-2xl"
+                                    id="password_field" th:classappend="${#fields.hasErrors('name')?'is-invalid':''}"
+                                    aria-describedby="emailHelp" placeholder="Password" />
+                                <div class="invalid-feedback  " th:each="e : ${#fields.errors('password')}"
+                                    th:text="${e}">
+                                </div>
+                            </div>
+
+                            <!-- about -->
+
+                            <div class="form-group">
+
+                                <textarea name="about" th:classappend="${#fields.hasErrors('about')?'is-invalid':''}"
+                                    placeholder="Enter something yourself" rows="6"
+                                    class="form-control mt-3 rounded-2xl" th:text="${user.about}"></textarea>
+                                <div class="invalid-feedback" th:each="e : ${#fields.errors('about')}" th:text="${e}">
+                                </div>
+                            </div>
+
+                            <!-- terms and condition -->
+
+                            <div class="form-group form-check mx-auto">
+                                <input type="checkbox" name="agreement" class="form-check-input" id="agreement"> <label
+                                    for="agreement">Accept
+                                    terms and conditions</label>
+                            </div>
+
+                            <div class="container text-center mt-3">
+
+                                <button type="submit" class="btn bg-primary text-white">Submit</button>
+                                <!-- <button type="reset" class="btn btn-warning">Reset</button> -->
+
+                            </div>
+                            <div class="mt-8 pt-4 text-sm text-gray-400 mx-auto border-t-2 text-center">
+                                Already have an account?
+                                <a th:href="@{signin}" class="font-medium text-blue-500">Click here...</a>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</body>
+
+</html>

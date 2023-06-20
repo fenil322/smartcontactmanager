@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/base::Layout(~{::section})">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+
+<body>
+    <section >
+        <div class="flex justify-center items-center mt-20 profile-data">
+            <div class="w-1/2 bg-white shadow-lg rounded-lg p-6">
+                <div class=" items-center mb-4 mx-auto justify-center text-center">
+                    <img th:src="${user.imageUrl}" alt="Profile Image" class="mx-auto w-24 h-24 rounded-full">
+                    <div class="ml-4">
+                        <h2 class="text-xl font-semibold" th:text="${user.name}"></h2>
+                        <p class="text-gray-600" th:text="${user.role}"></p>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <h3 class="text-lg font-semibold">About Me</h3>
+                    <p class="text-gray-700" th:text="${about}"></p>
+                </div>
+                <div class="flex items-centermt-2">
+                    <i class="fas fa-envelope text-gray-500 mr-2"></i>
+                    <div  class="text-blue-600" th:text="${user.email}"></div>
+                </div>
+                <button id="editButton" class="mt-3 items-center bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    Edit Profile
+                </button>
+            </div>
+        </div>
+
+        <div id="editForm" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center ease-in-out animation-spin hidden">
+            <div class="bg-white w-1/2 shadow-lg rounded-lg p-6">
+
+                
+              <h3 class="text-lg font-semibold mb-2">Edit Profile</h3>
+              <form th:action="@{process-update-user}" th:object="${user}" method="post">
+                <div class="mb-3">
+                    <label for="image" class="block text-gray-700 font-medium">Image</label>
+                    <div class="flex items-center border rounded-lg py-2 px-3">
+                        <img class="profile-image h-24 w-24 mr-4" th:src="@{'/img/'+${user.imageUrl}}"
+                            alt="Profile Image"></td>
+                        <div>
+                            <div>Choose New Image..</div>
+                            <!-- <i class="fas fa-image text-gray-500 mr-3"></i> -->
+                            <input type="file" id="image" name="profilePhoto" class="focus:outline-none w-full">
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                  <label for="name" class="block text-gray-900">Name :</label>
+                  <input type="text" id="name" name="name" class="form-input mt-1 block w-full border p-2" th:value="${user.name}">
+                </div>
+                <div class="mb-3">
+                  <label for="role" class="block text-gray-900">Role :</label>
+                  <input type="text" id="role" name="role" class="form-input mt-1 block w-full border p-2" th:value="${user.role}">
+                </div>
+                <div class="mb-3">
+                  <label for="about" class="block text-gray-900">About Me :</label>
+                  <textarea id="about" name="about" class="form-textarea mt-1 block w-full border p-2" rows="3" th:value="${user.about}"></textarea>
+                </div>
+                <div class="mb-3">
+                 <label for="email" class="block text-gray-900">Email :</label>
+                  <input type="email" id="email" name="email" class="form-input mt-1 block w-full border p-2" th:value="${user.email}">
+                </div>
+                <div class="mt-3 flex">
+                  <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                    Save Changes
+                  </button>
+                  
+                  <div id="cancelButton" class="ml-2 bg-red-500 hover:bg-red-600 text-white  font-bold py-2 px-4 rounded">
+                    Cancel
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        
+          <script>
+            const editButton = document.getElementById('editButton');
+            const editForm = document.getElementById('editForm');
+            const cancelButton = document.getElementById('cancelButton');
+        
+            editButton.addEventListener('click', () => {
+              editForm.classList.remove('hidden');
+            });
+        
+            cancelButton.addEventListener('click', () => {
+              editForm.classList.add('hidden');
+            });
+          </script>
+        
+
+    </section>
+</body>
+
+</html>

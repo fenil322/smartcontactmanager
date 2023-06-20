@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/base::Layout(~{::section})">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+
+<body>
+
+    <section class="">
+        <div class="container  py-8">
+            <h1 class="text-2xl font-bold mb-4">Contact List</h1>
+            <div th:if="${session.message}" class="container w-5/6 mx-auto">
+                <div th:classappend="${'alert-'+session.message.type}" class="alert text-center">
+                    <p class="text-center" th:text="${session.message.content}"></p>
+                </div>
+                <th:block th:text="${@sessionHelper.removeMessageFromSession()}"></th:block>
+
+            </div>
+            <table class="w-5/6 mx-auto border-2 shadow-md">
+                <thead class="bg-white p-4">
+                    <tr>
+                        <th class="text-xl font-semibold p-3">Profile Image</th>
+                        <th class="text-xl font-semibold p-3">Name</th>
+                        <th class="text-xl font-semibold p-3">Phone Number</th>
+                        <th class="text-xl font-semibold p-3">Email</th>
+                        <th class="text-xl font-semibold p-3">Actions</th>
+                    </tr>
+                </thead>
+                <div th:each="item : ${contacts}">
+                    <tbody class="bg-white border-2">
+                        <tr class="">
+                            <td class="pl-16 py-2">
+                            <img class="profile-image" th:src="@{'/img/'+${item.image}}" alt="Profile Image"></td>
+                            <td class="px-3 py-2" th:text="${item.name}"></td>
+                            <td class="px-3 py-2" th:text="${item.phone}"></td>
+                            <td class="px-3 py-2" ><a th:href="@{'/user/'+${item.cId}+'/contact'}"><span th:text="${item.email}"></span></a></td>
+                            <td class="px-3 py-2 flex">
+                                <form   method="post" th:action="@{'/user/edit-contact/'+${item.cId}}">
+                                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                         <i class="fas fa-edit"></i>
+                                        </button>
+                                    </form>   
+                                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2">
+                                    <a  th:href="@{'/user/delete/'+${item.cId}}">  <i class="fas fa-trash-alt"></i></a>
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- Add more contact items here -->
+                    </tbody>
+                </div>
+            </table>
+            <nav class="  mx-auto mt-5 ">
+                <ul class="block flex rounded list-none ">
+                    <li><div
+                            class="bg-gray-50 cursor-pointer rounded mx-1 hover:bg-blue-400 hover:text-gray-900 text-gray-500 font-semibold py-2 px-4 border border-gray-400">
+                            First
+                    </div></li>
+
+                    <li><div
+                            class="bg-gray-50 cursor-pointer rounded mx-1 hover:bg-blue-400 hover:text-gray-900 text-gray-500 font-semibold py-2 px-4 border border-gray-400">
+                            1
+                    </div></li>
+                    <li><div
+                            class="bg-gray-50 cursor-pointer rounded mx-1 hover:bg-blue-400 hover:text-gray-900 text-gray-500 font-semibold py-2 px-4 border border-gray-400">
+                            2
+                    </div></li>
+                    <li><div
+                            class="bg-gray-50 cursor-pointer rounded mx-1 hover:bg-blue-400 hover:text-gray-900 text-gray-500 font-semibold py-2 px-4 border border-gray-400">
+                            3
+                    </div></li>
+    
+                    <li><div
+                            class="bg-gray-50 cursor-pointer rounded mx-1 hover:bg-blue-400 hover:text-gray-900 text-gray-500 font-semibold py-2 px-4 border border-gray-400">
+                            Last
+                    </div></li>
+                </ul>
+            </nav>
+        </div>
+        <!-- pagination-->
+
+    </section>
+</body>
+
+</html>
